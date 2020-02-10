@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class WeatherVC: UIViewController, CLLocationManagerDelegate {
+class WeatherVC: UIViewController {
     
     @IBOutlet var currentWeatherElements: [UILabel]!
     @IBOutlet weak var dateLabel: UILabel!
@@ -54,23 +54,6 @@ class WeatherVC: UIViewController, CLLocationManagerDelegate {
             element.isHidden = false
         }
         currentWeatherImage.isHidden = false
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        locationAuthStatus()
-    }
-    
-    func locationAuthStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            currentLocation = locationManager.location
-            Location.shared.latitude = currentLocation.coordinate.latitude
-            Location.shared.longitude = currentLocation.coordinate.longitude
-            fetchData()
-        } else {
-            locationManager.requestWhenInUseAuthorization()
-            locationAuthStatus()
-        }
     }
     
     func fetchData() {
@@ -151,5 +134,18 @@ extension WeatherVC: UITableViewDelegate, UITableViewDataSource {
         }
         
         return ForecastCell()
+    }
+}
+
+extension WeatherVC: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedWhenInUse {
+            currentLocation = manager.location
+            Location.shared.latitude = currentLocation.coordinate.latitude
+            Location.shared.longitude = currentLocation.coordinate.longitude
+            fetchData()
+        } else {
+            manager.requestWhenInUseAuthorization()
+        }
     }
 }
