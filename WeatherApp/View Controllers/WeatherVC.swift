@@ -77,7 +77,6 @@ class WeatherVC: UIViewController {
             
             DispatchQueue.main.async {
                 self.stopSpinner()
-                self.showCurrentWeatherElements()
             }
             
             switch result {
@@ -85,10 +84,11 @@ class WeatherVC: UIViewController {
                 self.currentWeather = currentWeather
                 DispatchQueue.main.async {
                     self.updateMainUI()
+                    self.showCurrentWeatherElements()
                 }
                 self.getForecast()
             case .failure(let error):
-                print(error.rawValue)
+                self.showAlertOnMain(title: "Something went wrong", message: error.rawValue)
             }
         }
     }
@@ -104,7 +104,7 @@ class WeatherVC: UIViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                print(error.rawValue)
+                self.showAlertOnMain(title: "Something went wrong", message: error.rawValue)
             }
         }
     }
