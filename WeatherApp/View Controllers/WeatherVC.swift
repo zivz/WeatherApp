@@ -21,7 +21,6 @@ class WeatherVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     let locationManager = CLLocationManager()
-    var currentLocation: CLLocation!
     
     var currentWeather: CurrentWeather!
     var forecasts = [DecodedForecast]()
@@ -32,7 +31,6 @@ class WeatherVC: UIViewController {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startMonitoringSignificantLocationChanges()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -140,12 +138,17 @@ extension WeatherVC: UITableViewDelegate, UITableViewDataSource {
 extension WeatherVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
-            currentLocation = manager.location
-            Location.shared.latitude = currentLocation.coordinate.latitude
-            Location.shared.longitude = currentLocation.coordinate.longitude
-            fetchData()
+            locationManager.startUpdatingLocation()
         } else {
-            manager.requestWhenInUseAuthorization()
+            locationManager.requestWhenInUseAuthorization()
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let currentLocation: CLLocationCoordinate2D = locationManager.location?.coordinate else {
+            return }
+        Location.shared.latitude = currentLocation.latitude
+        Location.shared.longitude = currentLocation.longitude
+        fetchData()
     }
 }
