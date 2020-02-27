@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - CurrentWeather
-struct DeocdedWeather: Decodable {
+struct DecodedWeather: Decodable {
     
     let weather: [Weather]
     let main: Main
@@ -41,7 +41,7 @@ struct CurrentWeather: Codable {
     let weatherType: String
     let cityName: String
     
-    init(weather: DeocdedWeather) {
+    init(weather: DecodedWeather) {
         self.currentTemp = Int(weather.main.temp.rounded(.toNearestOrEven))
         self.weatherType = weather.weather.first?.type ?? ""
         self.cityName = weather.cityName

@@ -32,7 +32,6 @@ class WeatherVC: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         
-        tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         
@@ -119,7 +118,7 @@ class WeatherVC: UIViewController {
     
 }
 
-extension WeatherVC: UITableViewDelegate, UITableViewDataSource {
+extension WeatherVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return forecasts.count
     }

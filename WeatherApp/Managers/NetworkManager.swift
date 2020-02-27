@@ -100,7 +100,7 @@ class NetworkManager {
             
             do {
                 let decoder = JSONDecoder()
-                let decodedWeather = try decoder.decode(DeocdedWeather.self, from: data)
+                let decodedWeather = try decoder.decode(DecodedWeather.self, from: data)
                 let currentWeather = CurrentWeather(weather: decodedWeather)
                 completionHandler(.success(currentWeather))
             } catch {
