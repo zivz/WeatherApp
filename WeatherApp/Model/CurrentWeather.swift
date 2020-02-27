@@ -35,7 +35,7 @@ struct Weather: Decodable {
     }
 }
 
-struct CurrentWeather: Codable {
+struct CurrentWeather: Decodable {
 
     let currentTemp: Int
     let weatherType: String

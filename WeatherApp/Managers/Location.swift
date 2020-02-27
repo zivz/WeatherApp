@@ -6,7 +6,7 @@
 //  Copyright © 2020 Zalzstein, Ziv. All rights reserved.
 //
 
-import CoreLocation
+import Foundation
 
 class Location {
     static var shared = Location()
