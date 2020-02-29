@@ -143,6 +143,10 @@ extension WeatherVC: CLLocationManagerDelegate {
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        self.showAlertOnMain(title: "Check your location", message: "Your location seems to be none")
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let currentLocation: CLLocationCoordinate2D = locationManager.location?.coordinate else {
             return }
