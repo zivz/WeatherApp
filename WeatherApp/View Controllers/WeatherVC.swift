@@ -29,7 +29,8 @@ class WeatherVC: UIViewController {
         super.viewDidLoad()
         
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        locationManager.distanceFilter = 5000
         locationManager.requestWhenInUseAuthorization()
         
         tableView.dataSource = self
@@ -53,7 +54,8 @@ class WeatherVC: UIViewController {
         currentWeatherImage.isHidden = false
     }
     
-    func fetchData() {
+    private func fetchData() {
+        print("fetching new data as location has changed to (lat: \(Location.shared.latitude), lon: \(Location.shared.longitude))")
         getCurrentWeather()
     }
     
