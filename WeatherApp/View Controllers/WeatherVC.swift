@@ -55,7 +55,7 @@ class WeatherVC: UIViewController {
     }
     
     private func fetchData() {
-        print("fetching new data as location has changed to (lat: \(Location.shared.latitude), lon: \(Location.shared.longitude))")
+        print("fetching new data as location has changed to (lat: \(String(describing: Location.shared.latitude)), lon: \(String(describing: Location.shared.longitude)))")
         getCurrentWeather()
     }
     
